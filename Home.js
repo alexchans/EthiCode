@@ -15,7 +15,7 @@ const Home = ({ navigation }) => {
                     <Text>Log in</Text>
                     <TextInput placeholder='Username' style={styles.input} />
                     <TextInput placeholder='Password' style={styles.input} />
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Ethical Question")}>
                         <Text style={{ color: 'white' }}>Log In</Text>
                     </TouchableOpacity>
                 </View>
@@ -31,7 +31,7 @@ const Home = ({ navigation }) => {
                     <Text>Sign In</Text>
                     <TextInput placeholder='Preferred Username' style={styles.input} />
                     <TextInput placeholder='Password' style={styles.input} />
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Ethical Question")}>
                         <Text style={{ color: 'white' }}>Sign In</Text>
                     </TouchableOpacity>
                 </View>

@@ -1,37 +1,132 @@
-import { View, ScrollView, Text, TextInput, Button, Image, StyleSheet, TouchableOpacity } from 'react-native';
-const logo = require("./assets/logo.png")
+import React, { useState } from 'react';
+import { View, ScrollView, Text, TextInput, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import axios from 'axios';
+
+const handleLogin = async (username, password, navigation) => {
+    try {
+        const response = await axios.post(`${process.env.API_URL}/api/login`, {
+            username,
+            password
+        });
+        console.log('Login successful:', response.data);
+        navigation.navigate("Ethical Question");
+        // Navigate or save login state as needed
+    } catch (error) {
+        console.error('Login error:', error);
+    }
+};
+
+const handleUpdatePassword = async (username, newPassword) => {
+    try {
+        const response = await axios.put(`${process.env.API_URL}/api/update`, {
+            username,
+            password: newPassword
+        });
+        console.log('Password updated:', response.data);
+        // Handle the response, possibly navigate or show a success message
+    } catch (error) {
+        console.error('Update password error:', error);
+    }
+};
+
+const handleSignIn = async (username, password, navigation) => {
+    try {
+        const response = await axios.post(`${process.env.API_URL}/api/signin`, {
+            username,
+            password
+        });
+        console.log('Account created:', response.data);
+        navigation.navigate("Ethical Question");
+        // Navigate or save login state as needed
+    } catch (error) {
+        console.error('Sign in error:', error);
+    }
+};
+
+const logo = require("./assets/logo.png");
 
 const Home = ({ navigation }) => {
+    const [loginUsername, setLoginUsername] = useState('');
+    const [loginPassword, setLoginPassword] = useState('');
+    const [newUsername, setNewUsername] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [updateUsername, setUpdateUsername] = useState('');
+    const [updatePassword, setUpdatePassword] = useState('');
+
     return (
         <View style={styles.container}>
             <ScrollView>
                 <View style={{ flexDirection: "row" }}>
                     <Image source={logo} />
                     <View style={{ paddingLeft: "27%" }}>
-                        <Button title='About Us' onPress={() => navigation.navigate("About Us")} />
+                        <TouchableOpacity onPress={() => navigation.navigate("About Us")}>
+                            <Text>About Us</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
                 <View>
                     <Text>Log in</Text>
-                    <TextInput placeholder='Username' style={styles.input} />
-                    <TextInput placeholder='Password' style={styles.input} />
-                    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Ethical Question")}>
+                    <TextInput
+                        placeholder='Username'
+                        style={styles.input}
+                        value={loginUsername}
+                        onChangeText={setLoginUsername}
+                    />
+                    <TextInput
+                        placeholder='Password'
+                        style={styles.input}
+                        value={loginPassword}
+                        onChangeText={setLoginPassword}
+                        secureTextEntry
+                    />
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => handleLogin(loginUsername, loginPassword, navigation)}
+                    >
                         <Text style={{ color: 'white' }}>Log In</Text>
                     </TouchableOpacity>
                 </View>
                 <View>
                     <Text>Forgot Password</Text>
-                    <TextInput placeholder='Username' style={styles.input} />
-                    <TextInput placeholder='New Password' style={styles.input} />
-                    <TouchableOpacity style={styles.button}>
+                    <TextInput
+                        placeholder='Username'
+                        style={styles.input}
+                        value={updateUsername}
+                        onChangeText={setUpdateUsername}
+                    />
+                    <TextInput
+                        placeholder='New Password'
+                        style={styles.input}
+                        value={updatePassword}
+                        onChangeText={setUpdatePassword}
+                        secureTextEntry
+                    />
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => handleUpdatePassword(updateUsername, updatePassword)}
+                    >
                         <Text style={{ color: 'white' }}>Submit</Text>
                     </TouchableOpacity>
                 </View>
                 <View>
                     <Text>Sign In</Text>
-                    <TextInput placeholder='Preferred Username' style={styles.input} />
-                    <TextInput placeholder='Password' style={styles.input} />
-                    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Ethical Question")}>
+                    <TextInput
+                        placeholder='Preferred Username'
+                        style={styles.input}
+                        value={newUsername}
+                        onChangeText={setNewUsername}
+                    />
+                    <TextInput
+                        placeholder='Password'
+                        style={styles.input}
+                        value={newPassword}
+                        onChangeText={setNewPassword}
+                        secureTextEntry
+                    />
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => handleSignIn(newUsername, newPassword, navigation)}
+                    >
                         <Text style={{ color: 'white' }}>Sign In</Text>
                     </TouchableOpacity>
                 </View>
@@ -61,7 +156,6 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         justifyContent: 'center',
         alignItems: 'center',
-
     }
 });
 

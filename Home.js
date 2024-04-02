@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const handleLogin = async (username, password, navigation) => {
     try {
-        const response = await axios.post(`${process.env.API_URL}/api/login`, {
+        const response = await axios.post(`http://10.9.185.175:8080/api/login`, {
             username,
             password
         });
@@ -18,7 +18,7 @@ const handleLogin = async (username, password, navigation) => {
 
 const handleUpdatePassword = async (username, newPassword) => {
     try {
-        const response = await axios.put(`${process.env.API_URL}/api/update`, {
+        const response = await axios.put(`http://10.9.185.175:8080/api/update`, {
             username,
             password: newPassword
         });
@@ -31,7 +31,7 @@ const handleUpdatePassword = async (username, newPassword) => {
 
 const handleSignIn = async (username, password, navigation) => {
     try {
-        const response = await axios.post(`${process.env.API_URL}/api/signin`, {
+        const response = await axios.post(`http://10.9.185.175:8080/api/signin`, {
             username,
             password
         });

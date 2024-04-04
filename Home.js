@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const handleLogin = async (username, password, navigation) => {
     try {
-        const response = await axios.post(`http://10.9.185.175:8080/api/login`, {
+        const response = await axios.post(`http://127.0.0.1:8080/api/login`, {
             username,
             password
         });
@@ -18,7 +18,7 @@ const handleLogin = async (username, password, navigation) => {
 
 const handleUpdatePassword = async (username, newPassword) => {
     try {
-        const response = await axios.put(`http://10.9.185.175:8080/api/update`, {
+        const response = await axios.put(`http://127.0.0.1:8080/api/update`, {
             username,
             password: newPassword
         });
@@ -31,7 +31,7 @@ const handleUpdatePassword = async (username, newPassword) => {
 
 const handleSignIn = async (username, password, navigation) => {
     try {
-        const response = await axios.post(`http://10.9.185.175:8080/api/signin`, {
+        const response = await axios.post(`http://127.0.0.1:8080/api/signin`, {
             username,
             password
         });
@@ -57,15 +57,15 @@ const Home = ({ navigation }) => {
         <View style={styles.container}>
             <ScrollView>
                 <View style={{ flexDirection: "row" }}>
-                    <Image source={logo} />
-                    <View style={{ paddingLeft: "27%" }}>
+                    <Image source={logo} style={{width: 100, paddingBottom: 0}}/>
+                    <View style={{ paddingLeft: "47%"}}>
                         <TouchableOpacity onPress={() => navigation.navigate("About Us")}>
                             <Text>About Us</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
                 <View>
-                    <Text>Log in</Text>
+                    <Text style={styles.boldText}>Log in</Text>
                     <TextInput
                         placeholder='Username'
                         style={styles.input}
@@ -87,7 +87,7 @@ const Home = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
                 <View>
-                    <Text>Forgot Password</Text>
+                    <Text style={styles.boldText}>Forgot Password</Text>
                     <TextInput
                         placeholder='Username'
                         style={styles.input}
@@ -109,7 +109,7 @@ const Home = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
                 <View>
-                    <Text>Sign In</Text>
+                    <Text style={styles.boldText}>Sign In</Text>
                     <TextInput
                         placeholder='Preferred Username'
                         style={styles.input}
@@ -136,13 +136,17 @@ const Home = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+    boldText: {
+        fontWeight: 'bold',
+        fontSize: 16,
+    },
     container: {
         flex: 1,
-        padding: 40
+        padding: 30
     },
     input: {
         height: 40,
-        width: '80%',
+        width: '100%',
         marginTop: 10,
         marginBottom: 10,
         borderWidth: 1,
@@ -150,7 +154,7 @@ const styles = StyleSheet.create({
     },
     button: {
         backgroundColor: 'black',
-        width: '80%',
+        width: '100%',
         height: 40,
         marginTop: 10,
         marginBottom: 10,

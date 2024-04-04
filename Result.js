@@ -5,10 +5,10 @@ const Result = ({ route, navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.headerText}>AI Generated Response</Text>
+            <Text style={styles.boldTextTitle}>AI Generated Response</Text>
 
             <ScrollView style={styles.scrollView}>
-                <Text>Your result:</Text>
+                <Text style={styles.boldText}>Your result:</Text>
                 <TextInput 
                     placeholder='AI response...' 
                     style={styles.largeInput}
@@ -29,6 +29,16 @@ const Result = ({ route, navigation }) => {
 };
 
 const styles = StyleSheet.create({
+    boldText: {
+        fontWeight: 'bold',
+        fontSize: 20,
+        marginBottom: 2
+    },
+    boldTextTitle: {
+        fontWeight: 'bold',
+        fontSize: 23,
+        marginBottom: 20
+    },
     container: {
         flex: 1,
         padding: 40
@@ -43,7 +53,7 @@ const styles = StyleSheet.create({
     },
     largeInput: {
         height: 230,
-        width: '80%',
+        width: '100%',
         marginTop: 10,
         marginBottom: 10,
         borderWidth: 2,

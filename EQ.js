@@ -1,13 +1,12 @@
-import Config from 'react-native-config';
 import React, { useState } from 'react';
-import { View, ScrollView, Text, TextInput, Button, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, ScrollView, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 
 const EQ = ({ navigation }) => {
     const [question, setQuestion] = useState('');
     const [stance, setStance] = useState('');
     
     const submitQuestion = async (question, stance) => {
-        console.log("API Key:", Config.ethicodekey);
+        console.log("API Key:", process.env.OPENAI_KEY);
         try {
             const prompt = createPrompt(question, stance);
             const messages = [{ role: 'system', content: prompt }];
@@ -15,12 +14,13 @@ const EQ = ({ navigation }) => {
             const response = await fetch('https://api.openai.com/v1/chat/completions', {
                 method: "POST",
                 headers: {
-                    'Authorization': `Bearer ${Config.ethicodekey}`,
+                    'Authorization': `Bearer ${process.env.OPENAI_KEY}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
                     messages: messages,
                     model: 'gpt-4',
+                    max_tokens: 100,
                 })
             });
     
@@ -40,13 +40,13 @@ const EQ = ({ navigation }) => {
         // Customize the prompt based on the stance
         switch (stance) {
             case 'for':
-                return `Arguments supporting: ${question}`;
+                return `Your response should only be 2 Sentences and Short. Arguments supporting: ${question}`;
             case 'against':
-                return `Arguments opposing: ${question}`;
+                return `Your response should only be 2 Sentences and Short. Arguments opposing: ${question}`;
             case 'neutral':
-                return `Neutral analysis of: ${question}`;
+                return `Your response should only be 2 Sentences and Short. Neutral analysis of: ${question}`;
             default:
-                return `Discuss the statement: ${question}`;
+                return `Your response should only be 2 Sentences and Short. Discuss the statement: ${question}`;
         }
     };
 
@@ -54,14 +54,16 @@ const EQ = ({ navigation }) => {
         <View style={styles.container}>
             <ScrollView>
                 <View>
-                    <Text>Ask me an ethical question:</Text>
-                    <TextInput placeholder='Enter question here' style={styles.largeInput}
+                    <Text style={styles.boldText}>Ask me an ethical question:</Text>
+                    <TextInput
+                        placeholder='Enter question here'
+                        style={styles.largeInput}
                         multiline={true}
                         value={question}
                         onChangeText={setQuestion}
                     />
                 </View>
-                <Text>Choose the type of response you would like:</Text>
+                <Text style={styles.boldText}>Choose the type of response you would like:</Text>
                 <View style={{ flexDirection: "row" }}>
                     <TouchableOpacity style={styles.smallButton} onPress={() => setStance('for')}>
                         <Text style={{ color: 'white' }}>For</Text>
@@ -89,9 +91,13 @@ const EQ = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+    boldText: {
+        fontWeight: 'bold',
+        fontSize: 18
+    },
     container: {
         flex: 1,
-        padding: 40
+        padding: 30
     },
     input: {
         height: 40,
@@ -103,26 +109,26 @@ const styles = StyleSheet.create({
     },
     largeInput: {
         height: 230,
-        width: '80%',
+        width: '100%',
         marginTop: 10,
-        marginBottom: 10,
+        marginBottom: 50,
         borderWidth: 2,
         padding: 10,
     },
     button: {
         backgroundColor: 'black',
-        width: '80%',
+        width: '100%',
         height: 40,
-        marginTop: 10,
+        marginTop: 20,
         marginBottom: 10,
         justifyContent: 'center',
         alignItems: 'center',
     },
     smallButton: {
         backgroundColor: 'black',
-        width: '28%',
+        width: '30%',
         height: 40,
-        marginTop: 10,
+        marginTop: 20,
         marginBottom: 10,
         justifyContent: 'center',
         alignItems: 'center',

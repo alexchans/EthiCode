@@ -1,16 +1,29 @@
 import { View, ScrollView, Text, TextInput, Button, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
-const Result = ({ navigation }) => {
+const Result = ({ route, navigation }) => {
+    const aiResponse = route.params?.aiResponse || 'No response available';
+
     return (
         <View style={styles.container}>
-            <ScrollView>
-                <View>
-                    <Text>Your result:</Text>
-                    <TextInput placeholder='AI response...' style={styles.largeInput}
-                        multiline={true}
-                    />
-                </View>
+            <Text style={styles.headerText}>AI Generated Response</Text>
+
+            <ScrollView style={styles.scrollView}>
+                <Text>Your result:</Text>
+                <TextInput 
+                    placeholder='AI response...' 
+                    style={styles.largeInput}
+                    multiline={true}
+                    value={aiResponse}
+                    editable={false}
+                />
             </ScrollView>
+
+            <TouchableOpacity 
+                style={styles.backButton} 
+                onPress={() => navigation.goBack()}
+            >
+                <Text>Go Back</Text>
+            </TouchableOpacity>
         </View>
     );
 };

@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { View, ScrollView, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+requestAnimationFrame('dotenv').config();
 
 const EQ = ({ navigation }) => {
     const [question, setQuestion] = useState('');
     const [stance, setStance] = useState('');
     
     const submitQuestion = async (question, stance) => {
-        console.log("API Key:", process.env.OPENAI_KEY);
+        console.log("API Key:", process.env.ethikey);
         try {
             const prompt = createPrompt(question, stance);
             const messages = [{ role: 'system', content: prompt }];
@@ -14,7 +15,7 @@ const EQ = ({ navigation }) => {
             const response = await fetch('https://api.openai.com/v1/chat/completions', {
                 method: "POST",
                 headers: {
-                    'Authorization': `Bearer ${process.env.OPENAI_KEY}`,
+                    'Authorization': `Bearer ${process.env.ethikey}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({

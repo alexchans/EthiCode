@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
 import { View, ScrollView, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-requestAnimationFrame('dotenv').config();
 
 const EQ = ({ navigation }) => {
     const [question, setQuestion] = useState('');
     const [stance, setStance] = useState('');
-    
+
     const submitQuestion = async (question, stance) => {
         console.log("API Key:", process.env.ethikey);
         try {
             const prompt = createPrompt(question, stance);
             const messages = [{ role: 'system', content: prompt }];
-    
+
             const response = await fetch('https://api.openai.com/v1/chat/completions', {
                 method: "POST",
                 headers: {
@@ -24,11 +23,11 @@ const EQ = ({ navigation }) => {
                     max_tokens: 100,
                 })
             });
-    
+
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-    
+
             const responseData = await response.json();
             navigation.navigate("Result", { aiResponse: responseData.choices[0].message.content });
         } catch (error) {
@@ -36,14 +35,14 @@ const EQ = ({ navigation }) => {
             // Handle error (e.g., show an error message)
         }
     };
-    
+
     const createPrompt = (question, stance) => {
         // Customize the prompt based on the stance
         switch (stance) {
             case 'for':
-                return `Your response should only be 2 Sentences and Short. Arguments supporting: ${question}`;
+                return `${question}, back up this statement in 2 sentences`;
             case 'against':
-                return `Your response should only be 2 Sentences and Short. Arguments opposing: ${question}`;
+                return `${question}, against this statement in 2 sentences`;
             case 'neutral':
                 return `Your response should only be 2 Sentences and Short. Neutral analysis of: ${question}`;
             default:
@@ -76,8 +75,8 @@ const EQ = ({ navigation }) => {
                         <Text style={{ color: 'white' }}>Neutral</Text>
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity 
-                    style={styles.button} 
+                <TouchableOpacity
+                    style={styles.button}
                     onPress={() => {
                         // Replace this with your API call logic
                         submitQuestion(question, stance);

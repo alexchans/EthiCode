@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const handleLogin = async (username, password, navigation) => {
     try {
-        const response = await axios.post(`http://127.0.0.1:8080/api/login`, {
+        const response = await axios.post(`http://10.9.156.95:8080/api/login`, {
             username,
             password
         });
@@ -18,7 +18,7 @@ const handleLogin = async (username, password, navigation) => {
 
 const handleUpdatePassword = async (username, newPassword) => {
     try {
-        const response = await axios.put(`http://127.0.0.1:8080/api/update`, {
+        const response = await axios.put(`http://10.9.156.95:8080/api/update`, {
             username,
             password: newPassword
         });
@@ -31,7 +31,7 @@ const handleUpdatePassword = async (username, newPassword) => {
 
 const handleSignIn = async (username, password, navigation) => {
     try {
-        const response = await axios.post(`http://127.0.0.1:8080/api/signin`, {
+        const response = await axios.post(`http://10.9.156.95:8080/api/signin`, {
             username,
             password
         });
@@ -57,8 +57,8 @@ const Home = ({ navigation }) => {
         <View style={styles.container}>
             <ScrollView>
                 <View style={{ flexDirection: "row" }}>
-                    <Image source={logo} style={{width: 100, paddingBottom: 0}}/>
-                    <View style={{ paddingLeft: "47%"}}>
+                    <Image source={logo} style={{ width: 100, paddingBottom: 0 }} />
+                    <View style={{ paddingLeft: "47%" }}>
                         <TouchableOpacity onPress={() => navigation.navigate("About Us")}>
                             <Text>About Us</Text>
                         </TouchableOpacity>
